@@ -1,7 +1,7 @@
 {
     "name": "esit/cookiehandlebar",
     "description": "Cookiebar für das Open Source CMS Contao",
-    "version": "0.0.6",
+    "version": "1.0.1",
     "license": "GPL-3.0+",
     "type": "contao-module",
     "authors": [
