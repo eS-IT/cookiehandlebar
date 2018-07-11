@@ -1,0 +1,20 @@
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+
+
+    <?php if ($this->cookieModal): ?>
+        <?php echo $this->cookieModal; ?>
+    <?php endif; ?>
+
+    <?php if ($this->cookieBar): ?>
+        <?php echo $this->cookieBar; ?>
+    <?php endif; ?>
+
+    <script>
+        const $showCookiebar                = <?php echo $this->showCookiebar               ? 'true' : 'false'; ?>;
+        const $showCookiebartext            = <?php echo $this->showCookiebartext           ? 'true' : 'false'; ?>;
+        const $showCookiebarallowalllink    = <?php echo $this->showCookiebarallowalllink   ? 'true' : 'false'; ?>;
+        const $showCookiebarlink            = <?php echo $this->showCookiebarlink           ? 'true' : 'false'; ?>;
+        const $showCookiebarmodal           = <?php echo $this->showCookiebarmodal          ? 'true' : 'false'; ?>;
+    </script>
+</div>

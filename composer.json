@@ -1,0 +1,36 @@
+{
+    "name": "esit/cookiehandlebar",
+    "description": "Cookiebar für das Open Source CMS Contao",
+    "version": "0.0.6",
+    "license": "GPL-3.0+",
+    "type": "contao-module",
+    "authors": [
+        {
+            "name": "Patrick Froch",
+            "email": "info@easySolutionsIT.de",
+            "homepage": "https://easySolutionsIT.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "info@easySolutionsIT.de",
+        "issues":"https://github.com/eS-IT/cookiehandlebar/issues",
+        "source":"https://github.com/eS-IT/cookiehandlebar"
+    },
+    "require": {
+        "php": ">=7.0",
+        "contao/core-bundle": "~4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esit\\CookieHandleBar": ""
+        }
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "": "system/modules/CookieHandleBar"
+            }
+        }
+    }
+}

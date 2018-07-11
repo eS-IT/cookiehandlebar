@@ -1,0 +1,35 @@
+<div class="cookiebar <?php echo ($this->showCookiebar) ? 'openall' : 'closedall'; ?>">
+    <div class="cookiebar-inner <?php echo ($this->showCookiebartext) ? 'open' : 'closed'; ?>">
+
+        <div class="cookie-content">
+            <?php if ($this->cookieheadline): ?>
+                <div class="cookieheadline <?php echo ($this->showCookiebartext) ? 'open' : 'closed'; ?>">
+                    <?php echo $this->cookieheadline; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->bartext): ?>
+                <div class="cookiebartext <?php echo ($this->showCookiebartext) ? 'open' : 'closed'; ?>">
+                    <?php echo $this->bartext; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="cookiebarlinks">
+
+            <?php if ($this->barlabelallowall): ?>
+                <span class="cookiebarallowalllink <?php echo ($this->showCookiebarallowalllink) ? 'open' : 'closed'; ?>">
+                    <a href="<?php echo $this->allowAllLink; ?>"><?php echo $this->barlabelallowall;?></a>
+                </span>
+            <?php endif; ?>
+
+            <?php if ($this->barlabelconfig): ?>
+                <span class="cookiebarlink <?php echo ($this->showCookiebarlink) ? 'open' : 'closed'; ?>">
+                    <button id="cookibarlink"><?php echo $this->barlabelconfig;?></button>
+                </span>
+            <?php endif; ?>
+
+        </div>
+
+    </div>
+</div>
