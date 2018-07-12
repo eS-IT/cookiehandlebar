@@ -3,6 +3,7 @@
     "description": "Cookiebar für das Open Source CMS Contao",
     "license": "GPL-3.0-or-later",
     "type": "contao-module",
+    "keywords": ["contao", "cookie", "cookielaw", "cookiebar"],
     "authors": [
         {
             "name": "Patrick Froch",
