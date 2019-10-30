@@ -26,7 +26,7 @@
                 <?php if (is_array($this->cookiesettings) && count($this->cookiesettings)): ?>
                     <?php foreach ($this->cookiesettings as $item): ?>
                         <div class="formrow">
-                            <?php $checked = (is_array($this->selectedCookies) && in_array($item['cookieid'], $this->selectedCookies)) ? checked : ''; ?>
+                            <?php $checked = (is_array($this->selectedCookies) && in_array($item['cookieid'], $this->selectedCookies)) ? 'checked' : ''; ?>
                             <input type="checkbox" name="<?php echo $item['cookieid']; ?>" id="<?php echo $item['cookieid']; ?>" <?php echo $checked; ?>>
                             <label for="<?php echo $item['cookieid']; ?>" class="checkboxlabel"><?php echo $item['cookieheadline']; ?></label>
                             <div class="description">
