@@ -48,7 +48,7 @@ class TlModule
     public function generateUniqueId($value, $dc)
     {
         if (!$value) {
-            return uniqid($GLOBALS['CTS']['COOKIEBAR']['COOKIESETTINGPREFIX']);
+            return uniqid($GLOBALS['CTS']['COOKIEBAR']['COOKIESETTINGPREFIX'], true);
         }
 
         return $value;
@@ -86,7 +86,7 @@ class TlModule
     public function generateCtrlCookieName($value, $dc)
     {
         if (!$value) {
-            return uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX']);
+            return uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'], true);
         }
 
         return $value;

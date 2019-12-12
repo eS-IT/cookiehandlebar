@@ -59,7 +59,7 @@ $GLOBALS['TL_DCA'][$strName]['list']['operations']['delete'] = array
 //$GLOBALS['TL_DCA'][$strName]['palettes']['__selector__'][] = '';
 
 /* Palettes */
-$GLOBALS['TL_DCA'][$strName]['palettes']['cookiehandlebar'] = '{title_legend},name,type,cookieheadline;{cookiesettings_legend},defaultopenmodal;{cookietext_legend},bartext,modalheadline,modaltext;{cookiebuttons_legend},barlabelallowall,barlabelconfig,barposition,modallabelsave;{session_legend},sessioncookieheadline,sessioncookietext;{cookies_legend},cookiesettings;{cookiestemplate_legend},bartemplate,modaltemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA'][$strName]['palettes']['cookiehandlebar'] = '{title_legend},name,type,cookieheadline,ctrlcookiename;{cookiesettings_legend},defaultopenmodal;{cookietext_legend},bartext,modalheadline,modaltext;{cookiebuttons_legend},barlabelallowall,barlabelconfig,barposition,modallabelsave;{session_legend},sessioncookieheadline,sessioncookietext;{cookies_legend},cookiesettings;{cookiestemplate_legend},bartemplate,modaltemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 /* subpalettes */
 //$GLOBALS['TL_DCA'][$strName]['subpalettes'][''] = '';
@@ -88,9 +88,9 @@ $GLOBALS['TL_DCA'][$strName]['fields']['ctrlcookiename'] = array
     'label'                 => &$GLOBALS['TL_LANG'][$strName]['ctrlcookiename'],
     'exclude'               => true,
     'inputType'             => 'text',
-    'default'               => uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX']),
+    'default'               => uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'], true),
     'save_callback'         => array(array('\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule','generateCtrlCookieName')),
-    'eval'                  => ['maxlength'=>255, 'tl_class'=>'w50', 'unique'=>true, 'doNotCopy'=>true],
+    'eval'                  => ['maxlength'=>255, 'tl_class'=>'w50', 'unique'=>true, 'doNotCopy'=>true, 'alwaysSave'=>true, 'readonly'=>true],
     'sql'                   => "varchar(255) NOT NULL default ''"
 );
 
