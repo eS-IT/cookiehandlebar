@@ -12,6 +12,7 @@
 namespace Esit\CookieHandleBar\Classes\Contao\Dca;
 
 use Contao\Controller;
+use Contao\System;
 
 /**
  * Class TlModule
@@ -19,6 +20,13 @@ use Contao\Controller;
  */
 class TlModule
 {
+
+
+    /**
+     * Zweite Parameter für uniqid()
+     * @var bool
+     */
+    protected $useMoreEntropy = false;
 
 
     /**
@@ -48,10 +56,28 @@ class TlModule
     public function generateUniqueId($value, $dc)
     {
         if (!$value) {
-            return uniqid($GLOBALS['CTS']['COOKIEBAR']['COOKIESETTINGPREFIX'], true);
+            return uniqid($GLOBALS['CTS']['COOKIEBAR']['COOKIESETTINGPREFIX'], $this->useMoreEntropy);
         }
 
         return $value;
+    }
+
+
+    /**
+     * onsubmit_callback: Erzeugt den Namen des Kontroll-Cookies.
+     * @param $dc
+     */
+    public function generateCtrlCookieName($dc)
+    {
+        $value = $dc->activeRecord->ctrlcookiename;
+        $id     = $dc->id;
+        $table  = $dc->table;
+
+        if (empty($value)) {
+            $value = uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'], $this->useMoreEntropy);
+            $query = System::getContainer()->get('database_connection')->createQueryBuilder();
+            $query->update($table)->set('ctrlcookiename', '"' . $value . '"')->where("id = $id")->execute();
+        }
     }
 
 
@@ -74,21 +100,5 @@ class TlModule
     public function getCookiemodalTemplate($dc)
     {
         return Controller::getTemplateGroup('cts_cookiemodal');
-    }
-
-
-    /**
-     * save_callback: Erzeugt den Namen des Kontroll-Cookies.
-     * @param $value
-     * @param $dc
-     * @return string
-     */
-    public function generateCtrlCookieName($value, $dc)
-    {
-        if (!$value) {
-            return uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'], true);
-        }
-
-        return $value;
     }
 }

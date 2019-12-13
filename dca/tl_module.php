@@ -34,6 +34,9 @@
  */
 $strName = 'tl_module';
 
+/* config */
+$GLOBALS['TL_DCA'][$strName]['config']['onsubmit_callback'][] = [\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule::class, 'generateCtrlCookieName'];
+
 /* global_operations
 $GLOBALS['TL_DCA'][$strName]['list']['global_operations'] = array
 (
@@ -59,7 +62,7 @@ $GLOBALS['TL_DCA'][$strName]['list']['operations']['delete'] = array
 //$GLOBALS['TL_DCA'][$strName]['palettes']['__selector__'][] = '';
 
 /* Palettes */
-$GLOBALS['TL_DCA'][$strName]['palettes']['cookiehandlebar'] = '{title_legend},name,type,cookieheadline,ctrlcookiename;{cookiesettings_legend},defaultopenmodal;{cookietext_legend},bartext,modalheadline,modaltext;{cookiebuttons_legend},barlabelallowall,barlabelconfig,barposition,modallabelsave;{session_legend},sessioncookieheadline,sessioncookietext;{cookies_legend},cookiesettings;{cookiestemplate_legend},bartemplate,modaltemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA'][$strName]['palettes']['cookiehandlebar'] = '{title_legend},name,type,cookieheadline;{cookiesettings_legend},defaultopenmodal;{cookietext_legend},bartext,modalheadline,modaltext;{cookiebuttons_legend},barlabelallowall,barlabelconfig,barposition,modallabelsave;{session_legend},sessioncookieheadline,sessioncookietext;{cookies_legend},cookiesettings;{cookiestemplate_legend},bartemplate,modaltemplate;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 /* subpalettes */
 //$GLOBALS['TL_DCA'][$strName]['subpalettes'][''] = '';
@@ -88,9 +91,8 @@ $GLOBALS['TL_DCA'][$strName]['fields']['ctrlcookiename'] = array
     'label'                 => &$GLOBALS['TL_LANG'][$strName]['ctrlcookiename'],
     'exclude'               => true,
     'inputType'             => 'text',
-    'default'               => uniqid($GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'], true),
-    'save_callback'         => array(array('\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule','generateCtrlCookieName')),
-    'eval'                  => ['maxlength'=>255, 'tl_class'=>'w50', 'unique'=>true, 'doNotCopy'=>true, 'alwaysSave'=>true, 'readonly'=>true],
+    #'save_callback'         => [[\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule::class,  'generateCtrlCookieName']],
+    'eval'                  => ['maxlength'=>255, 'tl_class'=>'w50', 'unique'=>true],
     'sql'                   => "varchar(255) NOT NULL default ''"
 );
 
@@ -153,7 +155,7 @@ $GLOBALS['TL_DCA'][$strName]['fields']['bartemplate'] = array
     'label'                 => &$GLOBALS['TL_LANG'][$strName]['bartemplate'],
     'exclude'               => true,
     'inputType'             => 'select',
-    'options_callback'      => array('\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule', 'getCookiebarTemplate'),
+    'options_callback'      => array(\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule::class, 'getCookiebarTemplate'),
     'eval'                  => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
     'sql'                   => "varchar(64) NOT NULL default ''"
 );
@@ -162,7 +164,7 @@ $GLOBALS['TL_DCA'][$strName]['fields']['modaltemplate'] = array
 (   // Templateauswahl für die CookieModal
     'label'                 => &$GLOBALS['TL_LANG'][$strName]['modaltemplate'],
     'inputType'             => 'select',
-    'options_callback'      => array('\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule', 'getCookiemodalTemplate'),
+    'options_callback'      => array(\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule::class, 'getCookiemodalTemplate'),
     'eval'                  => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
     'sql'                   => "varchar(64) NOT NULL default ''"
 );
@@ -202,7 +204,7 @@ $GLOBALS['TL_DCA'][$strName]['fields']['cookiesettings'] = array
             'cookieid' => [  // Id des Cookies
                              'label'          => &$GLOBALS['TL_LANG'][$strName]['cookieid'],
                              'exclude'        => true,
-                             'save_callback'  => array(array('\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule','generateUniqueId')),
+                             'save_callback'  => array(array(\Esit\CookieHandleBar\Classes\Contao\Dca\TlModule::class,'generateUniqueId')),
                              'inputType'      => 'text',
                              'eval'           => [ 'style' => 'width:100%', 'columnPos'=>'long', 'unique'=>true, 'readonly'=>true]
             ],

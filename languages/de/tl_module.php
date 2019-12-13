@@ -56,7 +56,7 @@ $GLOBALS['TL_LANG'][$strName]['bartemplate']            = array('Template der Co
 $GLOBALS['TL_LANG'][$strName]['modaltemplate']          = array('Template des ModalWindows', 'Bitte wählen Sie das Template des ModalWindows aus.');
 $GLOBALS['TL_LANG'][$strName]['pageforscript']          = array('Seiten für das Skript', 'Bitte wählen Sie die Seiten aus, auf denen das Skript geladen werden soll.');
 $GLOBALS['TL_LANG'][$strName]['cookiesnippet']          = array('Snippet des Cookies', 'Bitte geben Sie das Snippet des Cookies ein.');
-$GLOBALS['TL_LANG'][$strName]['ctrlcookiename']         = array('Name des Controll-Cookies', 'Bitte geben Sie das Snippet des Name des Controll-Cookies ein. Er muss mit "' . $GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'] . '" beginnen!');
+$GLOBALS['TL_LANG'][$strName]['ctrlcookiename']         = array('Name des Kontroll-Cookies', 'Bitte geben Sie das Snippet des Name des Kontroll-Cookies ein. Er muss mit "' . $GLOBALS['CTS']['COOKIEBAR']['CTRLCOOKIEPREFIX'] . '" beginnen!');
 $GLOBALS['TL_LANG'][$strName]['sessioncookieheadline']  = array('Name des Contao Session Cookies', 'Bitte geben Sie die Überschrift des Contao Session Cookies ein.');
 $GLOBALS['TL_LANG'][$strName]['sessioncookietext']      = array('Text des Contao Session Cookies', 'Bitte geben Sie den Text des Contao Session Cookies ein.');
 

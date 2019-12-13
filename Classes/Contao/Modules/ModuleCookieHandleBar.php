@@ -55,7 +55,7 @@ class ModuleCookieHandleBar extends \Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate           = new \BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### FRONTEND MODUL ###';
             $objTemplate->title    = $this->headline;
@@ -77,27 +77,28 @@ class ModuleCookieHandleBar extends \Module
     {
         global $objPage;
         $url                            = $objPage->getFrontendUrl();
-        $this->cookiesettings           = deserialize($this->cookiesettings, true);
-        $this->setVisibility();
+        $this->cookiesettings           = unserialize($this->cookiesettings, [null]);
+        $this->setVisibility($this->ctrlcookiename);
         $this->Template->setData($this->arrData);
         $this->Template->cookieBar      = $this->generateBar($url);
-        $this->Template->cookieModal    = $this->generateModal();
+        $this->Template->cookieModal    = $this->generateModal($this->ctrlcookiename);
 
-        $this->loadScripts();
+        $this->loadScripts($this->ctrlcookiename);
         $this->handleForm($this->ctrlcookiename, $url);
     }
 
 
     /**
      * Erzeugt den String für das CookieModalWindow.
+     * @param $ctrlcookiename
      * @return string
      */
-    protected function generateModal()
+    protected function generateModal($ctrlcookiename)
     {
         $name                       = $this->modaltemplate ?: 'cts_cookiemodal';
         $template                   = new FrontendTemplate($name);
         $template->setData($this->arrData);
-        $template->selectedCookies  = $this->cookieHelper->getCookieIdsFormControll($_COOKIE, $this->ctrlcookiename);;
+        $template->selectedCookies  = $this->cookieHelper->getCookieIdsFormControll($_COOKIE, $ctrlcookiename);
 
         return $template->parse();
     }
@@ -121,21 +122,21 @@ class ModuleCookieHandleBar extends \Module
 
     /**
      * Verarbeitet das Formular.
-     * @param $name
+     * @param $ctrlcookiename
      * @param $url
      */
-    protected function handleForm($name, $url)
+    protected function handleForm($ctrlcookiename, $url)
     {
-        if (Input::get('allowAll') == 'true' || Input::post('FORM_SUBMIT') == 'COOKIEBARFORM') {
+        if (Input::get('allowAll') === 'true' || Input::post('FORM_SUBMIT') === 'COOKIEBARFORM') {
             $this->cookieHelper->deleteCookies();
 
-            if (Input::post('FORM_SUBMIT') == 'COOKIEBARFORM') {
+            if (!empty($_POST)) {
                 $cookies = $this->cookieHelper->getCookieIds($this->cookiesettings, array_keys($_POST));
             } else {
                 $cookies = $this->cookieHelper->getCookieIds($this->cookiesettings);
             }
 
-            $this->cookieHelper->setCookiebarCookie($name, $cookies);
+            $this->cookieHelper->setCookiebarCookie($ctrlcookiename, $cookies);
             Controller::redirect($url);
         }
     }
@@ -143,16 +144,21 @@ class ModuleCookieHandleBar extends \Module
 
     /**
      * Lädt die erlaubten Scripte.
+     * @param $ctrlcookiename
      */
-    protected function loadScripts()
+    protected function loadScripts($ctrlcookiename)
     {
-        $allowedKeys    = $this->cookieHelper->getCookieIdsFormControll($_COOKIE, $this->ctrlcookiename);
-        $cookiesettings = deserialize($this->cookiesettings);
+        $allowedKeys    = $this->cookieHelper->getCookieIdsFormControll($_COOKIE, $ctrlcookiename);
+        $cookiesettings = $this->cookiesettings;
+
+        if (!\is_array($cookiesettings)) {
+            $cookiesettings = unserialize($this->cookiesettings, [null]);
+        }
 
         if (is_array($cookiesettings) && count($cookiesettings)) {
             foreach ($cookiesettings as $cookie) {
                 if (in_array($cookie['cookieid'], $allowedKeys) && $cookie['cookiesnippet']) {
-                    $location = ($cookie['cookiescriptlocation'] == 'head') ? 'TL_HEAD' : 'TL_BODY';
+                    $location = ($cookie['cookiescriptlocation'] === 'head') ? 'TL_HEAD' : 'TL_BODY';
                     $GLOBALS[$location][] = str_replace('&lt;', '<', $cookie['cookiesnippet']);
                 }
             }
@@ -164,8 +170,9 @@ class ModuleCookieHandleBar extends \Module
 
     /**
      * Setzt den Sichbarkeitsstatus der einzelnen Elemente der CookieBar.
+     * @param $ctrlcookiename
      */
-    protected function setVisibility()
+    protected function setVisibility($ctrlcookiename)
     {
         $this->showCookiebar                = false;
         $this->showCookiebartext            = false;
@@ -173,7 +180,7 @@ class ModuleCookieHandleBar extends \Module
         $this->showCookiebarlink            = false;
         $this->showCookiebarmodal           = false;
 
-        if (!array_key_exists($this->ctrlcookiename, $_COOKIE)) {
+        if (!array_key_exists($ctrlcookiename, $_COOKIE)) {
             // Kein Kontroll-Cookie gesetzt
             if ($this->defaultopenmodal) {
                 // Modal sofort anzeigen
