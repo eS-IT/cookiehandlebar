@@ -16,6 +16,7 @@ use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
 use Esit\CookieHandleBar\Classes\Helper\CookieHelper;
+use http\QueryString;
 
 /**
  * Class ModuleCookieHandleBar
@@ -75,8 +76,7 @@ class ModuleCookieHandleBar extends \Module
      */
     protected function compile()
     {
-        global $objPage;
-        $url                            = $objPage->getFrontendUrl();
+        $url                            = $this->generateUrl();
         $this->cookiesettings           = unserialize($this->cookiesettings, [null]);
         $this->setVisibility($this->ctrlcookiename);
         $this->Template->setData($this->arrData);
@@ -85,6 +85,26 @@ class ModuleCookieHandleBar extends \Module
 
         $this->loadScripts($this->ctrlcookiename);
         $this->handleForm($this->ctrlcookiename, $url);
+    }
+
+
+    /**
+     * Erzeugt die Url der aktuellen Seite.
+     * @return mixed
+     */
+    protected function generateUrl()
+    {
+        $url = Controller::addToUrl('');
+
+        if (false !== strpos($url, '?')) {
+            $parts = \explode('?', $url);
+
+            if (false !== $parts && \count($parts) > 0) {
+                $url = array_shift($parts);
+            }
+        }
+
+        return $url;
     }
 
 
