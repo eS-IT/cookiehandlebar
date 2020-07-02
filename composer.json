@@ -4,6 +4,7 @@
     "license": "GPL-3.0-or-later",
     "type": "contao-module",
     "keywords": ["contao", "cookie", "cookielaw", "cookiebar"],
+    "abandoned": true,
     "authors": [
         {
             "name": "Patrick Froch",
