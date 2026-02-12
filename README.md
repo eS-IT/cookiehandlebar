@@ -1,4 +1,4 @@
-# cookiehandlebar
+# cookiehandlebar [DEPRECATED]
 
 Cookiebar für das Open Source CMS Contao
 
